@@ -1,0 +1,13 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Phone } from "lucide-react";
+import { admissions } from "@/lib/site-config";
+
+const reveal = { hidden: { opacity: 0, y: 22 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } };
+
+export default function Admissions() {
+  const reduced = useReducedMotion();
+  const props = reduced ? {} : { initial: "hidden", whileInView: "visible", viewport: { once: true, amount: 0.16 } };
+  return <section id="apply" aria-labelledby="apply-heading" className="relative overflow-hidden bg-[#07111e] py-24 sm:py-32 lg:py-40"><div aria-hidden="true" className="absolute right-[-10rem] top-8 size-[30rem] rounded-full bg-[#d8af59]/[0.04] blur-3xl" /><div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-10"><motion.div {...props} variants={reveal} className="grid gap-10 lg:grid-cols-12 lg:items-end"><div className="lg:col-span-7"><div className="mb-7 flex items-center gap-3"><span className="h-px w-9 bg-[#dfb861]" /><span className="text-xs font-semibold tracking-[0.18em] text-[#f0cf85] uppercase">Admissions</span></div><h2 id="apply-heading" className="max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl">Start with a conversation.</h2></div><p className="max-w-sm text-pretty text-base leading-7 text-white/63 lg:col-span-4 lg:col-start-9 lg:pb-1">Reach the AJCE admissions team directly for the programme you are considering.</p></motion.div><motion.div {...props} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }} className="mt-16 grid border-l border-t border-white/12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">{admissions.map((entry) => <motion.a key={entry.label} href={`tel:${entry.phone}`} variants={reveal} whileHover={reduced ? undefined : { y: -4 }} className="group min-h-52 border-b border-r border-white/12 p-6 transition-colors hover:bg-white/[0.035] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#f0cf85] sm:p-7"><Phone size={19} aria-hidden="true" className="text-[#f0cf85] transition-transform duration-300 group-hover:-translate-y-1" /><p className="mt-10 text-xs font-semibold tracking-[0.14em] text-white/58 uppercase">{entry.label}</p><p className="mt-3 text-lg font-semibold tracking-[-0.02em] text-white">{entry.display}</p><span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#f0cf85]">Call admissions <ArrowUpRight size={16} aria-hidden="true" /></span></motion.a>)}</motion.div></div></section>;
+}
